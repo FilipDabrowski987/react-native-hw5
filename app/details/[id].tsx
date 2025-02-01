@@ -22,10 +22,10 @@ useEffect(() => {
         <Text>Name: {user.name}</Text>
         <Text>User name: {user.username}</Text>
         <Text>email: {user.email}</Text>
-        <Text>phone: {user.phone}</Text>
+        {/* <Text>phone: {user.phone}</Text>
         <Text>street: {user.address.street}</Text>
         <Text>city: {user.address.city}</Text>
-        <Text>zip code: {user.address.zipcode}</Text>
+        <Text>zip code: {user.address.zipcode}</Text> */}
       </View> : <Text>Ładowanie...</Text>
       }
     </View>

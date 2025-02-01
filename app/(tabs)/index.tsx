@@ -34,9 +34,16 @@ export default function HomeScreen() {
   const router = useRouter()
 
   useEffect(() => {
-    axios.get(`https://jsonplaceholder.typicode.com/users`)
-      .then(response => setUsers(response.data))
-      .catch(error => console.error(error))
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get("https://jsonplaceholder.typicode.com/users");
+        setUsers(response.data);
+      } catch (error) {
+        console.error("Error fetching users", error);
+      }
+    };
+
+    fetchUsers();
   }, [])
 
   const handleSetId = () => {
@@ -121,4 +128,4 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "darkgray", 
   }
-});
+})

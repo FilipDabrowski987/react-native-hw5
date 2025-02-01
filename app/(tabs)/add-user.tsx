@@ -4,35 +4,44 @@ import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import axios from "axios";
 
 export default function AddUserScreen() {
-  const [id, setId] = useState("")
-  const [error, setError] = useState("")
-  const [users, setUsers] = useState([])
-  const router = useRouter()
+    const [name, setName] = useState("")
+    const [username, setUsername] = useState("")
+    const [email, setEmail] = useState("")
+    const [error, setError] = useState("")
+    const router = useRouter()
+    
+    const handleAddUser = async () => {
+        if (!name || !username || !email) {
+            setError("Wszystkie pola są wymagane.");
+            return;
+        }
 
-//   useEffect(() => {
-//     axios.get('https://jsonplaceholder.typicode.com/users')
-//       .then(response => setUsers(response.data))
-//       .catch(error => console.error(error))
-//   }, [])
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            setError("Podaj poprawny adres e-mail.");
+            return;
+        }
 
-  const handleSetId = () => {
+        setError("");
 
-  const idNumber = Number(id);
+        const newUser = {
+            name: name,
+            username: username,
+            email: email,
+        };
 
-    if (!/^\d+$/.test(id)) {
-      setError("Proszę wpisać liczbę całkowitą")
-    } else if (idNumber < 1 || idNumber > 1000) {
-    setError("ID musi być liczbą z zakresu od 1 do 1000.");
-    } else {
-      setError("")
-      router.push(`/details/${id}`)
-      setId("")
+        try {
+            const response = await axios.post("https://jsonplaceholder.typicode.com/users", newUser);
+            console.log("New user added:", response.data);
+        } catch (error) {
+            console.error("Error adding user:", error);
+        }
     }
-  };
-
-  const handleClearId = () => {
-    setId("")
-    setError("")
+ 
+  const handleClear = () => {
+      setName("")
+      setUsername("")
+      setEmail("")
+      setError("")
   }
 
   return (
@@ -41,26 +50,26 @@ export default function AddUserScreen() {
           <View>
               <Text>Imię: <TextInput
               style={styles.input}
-              onChangeText={setId}
-                value={id}
+              onChangeText={setName}
+                value={name}
                 placeholder="Podaj imię"
                 keyboardType="default"
               /></Text>
           </View>
           <View>
-              <Text>Nazwisko: <TextInput
+              <Text>Nazwa: <TextInput
               style={styles.input}
-              onChangeText={setId}
-                value={id}
-                placeholder="Podaj nazwisko"
+              onChangeText={setUsername}
+                value={username}
+                placeholder="Podaj nazwę użytkownika"
                 keyboardType="default"
               /></Text>
           </View>
           <View>
               <Text>Email: <TextInput
               style={styles.input}
-              onChangeText={setId}
-                value={id}
+              onChangeText={setEmail}
+                value={email}
                 placeholder="Podaj email"
                 keyboardType="email-address"
               /></Text>
@@ -68,10 +77,11 @@ export default function AddUserScreen() {
       {error ? <Text style={styles.error}>{error}</Text> : null}
       <Button
         title="Zapisz"
-        onPress={handleSetId} />
+        onPress={handleAddUser}
+        />
         <Button
         title="Wyczyść"
-        onPress={handleClearId}
+        onPress={handleClear}
       />
     </View>
   );
@@ -88,7 +98,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: 700,
+    fontWeight: "700",
   },
   input: {
     height: 40,
@@ -103,4 +113,4 @@ const styles = StyleSheet.create({
     color: "red",
     marginBottom: 10,
   }
-});
+})
