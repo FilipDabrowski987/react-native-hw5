@@ -37,7 +37,7 @@ export default function AddUserScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Wprowadź ID</Text>
+      <Text style={styles.title}>Dodaj użytkownika</Text>
       <Button
         title={'Idź do about'}
         onPress={() => router.push('/about')} />

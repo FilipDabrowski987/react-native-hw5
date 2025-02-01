@@ -1,16 +1,40 @@
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, FlatList, StyleSheet, Text, TextInput, View } from "react-native";
 import axios from "axios";
+
+export type TUser = {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  address: {
+    street: string;
+    suite: string;
+    city: string;
+    zipcode: string;
+    geo: {
+      lat: string;
+      lng: string;
+    }
+  };
+  phone: string;
+  website: string;
+  company: {
+    name: string;
+    catchPhrase: string;
+    bs: string;
+  };
+}
 
 export default function HomeScreen() {
   const [id, setId] = useState("")
   const [error, setError] = useState("")
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState<TUser[]>([])
   const router = useRouter()
 
   useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/users')
+    axios.get(`https://jsonplaceholder.typicode.com/users`)
       .then(response => setUsers(response.data))
       .catch(error => console.error(error))
   }, [])
@@ -37,7 +61,12 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Wprowadź ID</Text>
+      <Text style={styles.title}>Lista użytkowników</Text>
+      <FlatList
+        data={users}
+        keyExtractor={user=>user.id.toString()}
+        renderItem={({ item }) => <View style={styles.userItem}><Button title={item.name} onPress={() => router.push(`/details/${item.id}`)} /></View>}
+      />
       <Button
         title={'Idź do about'}
         onPress={() => router.push('/about')} />
@@ -66,7 +95,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'lightgray',
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 70,
     gap: 20,
   },
   title: {
@@ -85,5 +115,10 @@ const styles = StyleSheet.create({
   error: {
     color: "red",
     marginBottom: 10,
+  },
+  userItem: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "darkgray", 
   }
 });
