@@ -19,7 +19,13 @@ useEffect(() => {
     <View style={styles.container}>
       <Text style={styles.title}>Użytkownik nr {id} </Text>
       {user && <View>
-        <Text>{user.name}</Text>
+        <Text>Name: {user.name}</Text>
+        <Text>User name: {user.username}</Text>
+        <Text>email: {user.email}</Text>
+        <Text>phone: {user.phone}</Text>
+        <Text>street: {user.address.street}</Text>
+        <Text>city: {user.address.city}</Text>
+        <Text>zip code: {user.address.zipcode}</Text>
       </View>
       }
     </View>
