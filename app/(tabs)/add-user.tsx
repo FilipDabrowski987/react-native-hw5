@@ -9,11 +9,11 @@ export default function AddUserScreen() {
   const [users, setUsers] = useState([])
   const router = useRouter()
 
-  useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/users')
-      .then(response => setUsers(response.data))
-      .catch(error => console.error(error))
-  }, [])
+//   useEffect(() => {
+//     axios.get('https://jsonplaceholder.typicode.com/users')
+//       .then(response => setUsers(response.data))
+//       .catch(error => console.error(error))
+//   }, [])
 
   const handleSetId = () => {
 
@@ -37,25 +37,42 @@ export default function AddUserScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Dodaj użytkownika</Text>
-      <Button
-        title={'Idź do about'}
-        onPress={() => router.push('/about')} />
-      <TextInput
+          <Text style={styles.title}>Dodaj użytkownika</Text>
+          <View>
+              <Text>Imię: <TextInput
               style={styles.input}
               onChangeText={setId}
                 value={id}
-                placeholder="Wpisz ID"
-                keyboardType="numeric"
-      />
+                placeholder="Podaj imię"
+                keyboardType="default"
+              /></Text>
+          </View>
+          <View>
+              <Text>Nazwisko: <TextInput
+              style={styles.input}
+              onChangeText={setId}
+                value={id}
+                placeholder="Podaj nazwisko"
+                keyboardType="default"
+              /></Text>
+          </View>
+          <View>
+              <Text>Email: <TextInput
+              style={styles.input}
+              onChangeText={setId}
+                value={id}
+                placeholder="Podaj email"
+                keyboardType="email-address"
+              /></Text>
+          </View>
       {error ? <Text style={styles.error}>{error}</Text> : null}
       <Button
+        title="Zapisz"
+        onPress={handleSetId} />
+        <Button
         title="Wyczyść"
         onPress={handleClearId}
       />
-      <Button
-        title="Przejdź"
-        onPress={handleSetId} />
     </View>
   );
 }

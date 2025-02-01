@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { TUser } from "../(tabs)";
 
 export default function DetailsScreen() {
@@ -18,7 +18,7 @@ useEffect(() => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Użytkownik nr {id} </Text>
-      {user && <View>
+      {user ? <View>
         <Text>Name: {user.name}</Text>
         <Text>User name: {user.username}</Text>
         <Text>email: {user.email}</Text>
@@ -26,7 +26,7 @@ useEffect(() => {
         <Text>street: {user.address.street}</Text>
         <Text>city: {user.address.city}</Text>
         <Text>zip code: {user.address.zipcode}</Text>
-      </View>
+      </View> : <Text>Ładowanie...</Text>
       }
     </View>
   );
