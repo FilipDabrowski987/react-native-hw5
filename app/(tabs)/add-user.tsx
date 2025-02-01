@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import axios from "axios";
 
-export default function HomeScreen() {
+export default function AddUserScreen() {
   const [id, setId] = useState("")
   const [error, setError] = useState("")
   const [users, setUsers] = useState([])
